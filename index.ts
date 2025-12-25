@@ -34,7 +34,7 @@ async function lookupUser() {
             header.hide()
             results.show()
 
-            $("#username").text(user.username)
+            $("#username").text(`@${user.username}`)
             $("#displayName").text(user.displayName)
             $("#avatar").attr("src", user.avatar)
             $("#finishCount").text(data.ObbyData.FinishCount)
