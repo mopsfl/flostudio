@@ -4,6 +4,8 @@ const codes = {
     5: "User not found in datastore"
 }
 
+const apiUrl = location.hostname === "localhost" ? "http://localhost:6969/v1/" : "https://api.mopsfl.de/v1/"
+
 const search = $(".search"),
     queryInput = $(".username"),
     error = $(".error"),
@@ -21,7 +23,7 @@ async function lookupUser() {
         search.addClass("disabled")
         error.text("")
 
-        const response = await fetch(`http://localhost:6969/v1/flostudio/user/data/${query}`)
+        const response = await fetch(`${apiUrl}flostudio/user/data/${query}`)
         const responseJSON = await response.json()
 
         if (response.ok && responseJSON.user && responseJSON.data) {
