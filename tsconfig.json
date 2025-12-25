@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "./dist/js",
+    "esModuleInterop": true,
+    "paths": {}
+  },
+  "compileOnSave": true,
+  "exclude": ["node_modules"]
+}
