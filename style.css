@@ -9,6 +9,15 @@
     --ripple-color: rgba(255, 255, 255, 0.2);
 }
 
+* {
+    scrollbar-width: thin;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    -webkit-touch-callout: none;
+}
+
 html {
     font-family: "Segoe UI", sans-serif;
     background-color: var(--bg-main);
