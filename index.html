@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flo Studio - User Lookup</title>
+    <title>Flo Studio - Web Panel</title>
     <link rel="stylesheet" href="./style.css">
 
     <script src="./ripple.js" defer></script>
@@ -12,13 +12,30 @@
 </head>
 
 <body>
-    <main>
-        <header>
-            <span class="title">Flo Studio</span>
-            <span class="small">User Lookup</span>
-        </header>
+    <main class="panel centered accessPassword hide">
+        <div class="panel-header">
+            <span class="title">Panel Access</span>
+            <span class="small">Enter your panel access password</span>
+        </div>
 
         <div class="inputs">
+            <input type="password" id="accessPassword" placeholder="Password">
+            <button class="login ripple-effect small">
+                <div class="loader"></div>Login
+            </button>
+        </div>
+
+        <span class="error"></span>
+    </main>
+
+    <button class="logout ripple-effect hide">Logout</button>
+    <main class="panel centered app hide">
+        <div class="panel-header">
+            <span class="title">Flo Studio</span>
+            <span class="small">Admin Panel</span>
+        </div>
+
+        <div class="inputs row">
             <input type="text" class="username" placeholder="Username / User ID">
             <button class="search ripple-effect">
                 <div class="loader"></div>Search
@@ -28,37 +45,43 @@
         <span class="error"></span>
     </main>
 
-    <div class="results">
+    <section class="panel centered results hide">
+        <button class="back ripple-effect">Back</button>
         <div class="user">
-            <img class="avatar" id="avatar" src="" alt="">
+            <img class="avatar" id="avatar" src="" alt="User avatar">
+
             <div class="username">
                 <span class="displayName" id="displayName">N/A</span>
                 <span class="name" id="username">@N/A</span>
             </div>
         </div>
+
         <div class="data">
             <div class="dataGroup">
                 <div class="dataValue w50">
                     <span class="name">Finish Count</span>
                     <span class="value" id="finishCount">0</span>
                 </div>
+
                 <div class="dataValue w50">
                     <span class="name">Ban Count</span>
                     <span class="value" id="banCount">0</span>
                 </div>
             </div>
+
             <div class="dataGroup">
                 <div class="dataValue w50">
                     <span class="name">Current Checkpoint</span>
                     <span class="value" id="currentCheckpoint">0</span>
                 </div>
+
                 <div class="dataValue w50">
                     <span class="name">Free Skips</span>
                     <span class="value" id="freeSkips">0</span>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </body>
 
 </html>

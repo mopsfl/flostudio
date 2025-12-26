@@ -1,81 +1,45 @@
-import $ from "jquery"
+import $ from "jquery";
+import API from "./modules/API";
+import UI from "./modules/UI";
 
-const codes = {
-    5: "User not found in datastore"
-}
+$(() => {
 
-const apiUrl = location.hostname === "localhost" ? "http://localhost:6969/v1/" : "https://api.mopsfl.de/v1/"
+    if (!localStorage.getItem("fsp_token")) {
+        $(".panel.hide").removeClass("hide")
+        UI.showPanel(UI.access)
+    } else {
+        API.Login(true).then(success => {
+            $(".panel.hide").removeClass("hide")
 
-const search = $(".search"),
-    queryInput = $(".username"),
-    error = $(".error"),
-    results = $(".results"),
-    inputs = $(".inputs"),
-    header = $("header")
+            if (success === false) {
+                UI.showPanel(UI.access)
+            } else {
+                UI.showPanel(UI.app)
+                $(".logout").removeClass("hide").hide().fadeIn()
+            }
+        })
+    }
 
-results.hide()
+    $(".search").on("click", () => {
+        API.GetUserData()
+    })
 
-async function lookupUser() {
-    try {
-        const query = queryInput.val()
-        if (!query) return
+    $(".login").on("click", () => {
+        API.Login()
+    })
 
-        search.addClass("disabled")
-        error.text("")
+    $(".logout").on("click", () => {
+        localStorage.removeItem("fsp_token")
+        window.location.reload()
+    })
 
-        const response = await fetch(`${apiUrl}flostudio/user/data/${query}`)
-        const responseJSON = await response.json()
+    $(".back").on("click", () => {
+        UI.showPanel(UI.app)
+    })
 
-        if (response.ok && responseJSON.user && responseJSON.data) {
-            const user: User = responseJSON.user,
-                data: Data = responseJSON.data
-
-            inputs.hide()
-            header.hide()
-            results.show()
-
-            $("#username").text(`@${user.username}`)
-            $("#displayName").text(user.displayName)
-            $("#avatar").attr("src", user.avatar)
-            $("#finishCount").text(data.ObbyData.FinishCount)
-            $("#banCount").text(data.ObbyData.BanCount)
-            $("#freeSkips").text(data.ObbyData.FreeSkips)
-            $("#currentCheckpoint").text(data.ObbyData.CheckpointId)
-        } else {
-            error.text(codes[responseJSON.code] || responseJSON.message || "Unknown error occurred!")
+    $(document).on("keypress", e => {
+        if (e.which === 13 && document.activeElement === $(".username")[0]) {
+            API.GetUserData();
         }
-
-        search.removeClass("disabled")
-    } catch (err) {
-        error.text("Unexpected error occurred!")
-        search.removeClass("disabled")
-    }
-}
-
-search.on("click", lookupUser)
-$(document).on("keypress", function (e) {
-    if (e.which === 13 && document.activeElement === queryInput[0]) {
-        lookupUser();
-    }
+    });
 });
-
-export type User = {
-    username: string,
-    id: number,
-    displayName: string,
-    avatar: string
-}
-
-export type Data = {
-    ObbyData: {
-        BanCount: number,
-        CheckpointId: number,
-        Disclaimer_1: boolean,
-        FinishCount: number,
-        Finished: boolean,
-        FreeSkips: number
-    },
-    Settings: {
-        Music: boolean
-    }
-}

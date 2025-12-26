@@ -1,111 +1,195 @@
 :root {
-    --rippleColor: rgba(255, 255, 255, 0.2);
+    --bg-main: #161616;
+    --bg-panel: #111111;
+    --bg-control: #232323;
+    --text-main: #e4e4e4;
+    --text-muted: #575757;
+    --danger: rgb(184, 3, 3);
+
+    --ripple-color: rgba(255, 255, 255, 0.2);
 }
 
 html {
     font-family: "Segoe UI", sans-serif;
-    background-color: #161616;
-    color: #e4e4e4;
+    background-color: var(--bg-main);
+    color: var(--text-main);
 }
 
-main {
+.hide {
+    display: none !important;
+}
+
+.centered {
     position: fixed;
-    display: grid;
     left: 50%;
     top: 40%;
     transform: translate(-50%, -50%);
-    width: auto;
     text-align: center;
 }
 
-header {
+.panel {
+    width: 350px;
+    padding: 10px;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-header {
     display: grid;
     margin-bottom: 2em;
     user-select: none;
 }
 
-header>.title {
+.panel-header .title {
     font-size: 22px;
     font-weight: bold;
 }
 
-header>.small {
+.panel-header .small {
     font-size: 12px;
 }
 
 .inputs {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     gap: 5px;
     width: 100%;
+}
+
+.inputs.row {
     height: 2em;
+    flex-direction: row;
+}
+
+.back,
+.logout {
+    margin-bottom: 1em;
+    width: max-content;
+    height: 2em;
+}
+
+.logout {
+    position: absolute !important;
+    top: 0;
+    right: 0;
+    margin: 1em;
+}
+
+input {
+    padding: 10px;
+    border-radius: 3px;
+    border: none;
+    outline: none;
+    background-color: var(--bg-control);
+    color: var(--text-main);
+    font-family: inherit;
+}
+
+button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px;
+    border-radius: 3px;
+    border: none;
+    background-color: var(--bg-control);
+    color: var(--text-main);
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background-color 0.15s,
+        transform 0.15s,
+        color 0.15s;
+}
+
+button:hover:not(.disabled) {
+    background-color: #282828;
+}
+
+button:active:not(.disabled) {
+    transform: scale(0.97);
+}
+
+button.full {
+    width: 100%;
+}
+
+button.small {
+    height: 2em;
+}
+
+button .loader {
+    position: absolute;
+    scale: 0.3;
+    display: none;
+}
+
+button.disabled {
+    color: transparent;
+    filter: blur(0.5px);
+    cursor: default;
+}
+
+button.disabled .loader {
+    display: block;
 }
 
 .error {
     margin-top: 1em;
-    color: rgb(184, 3, 3);
-}
-
-.results {
-    width: 350px;
-    height: 200px;
-    position: fixed;
-    left: 50%;
-    top: 40%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+    color: var(--danger);
 }
 
 .user {
     display: flex;
-    text-align: left;
+    gap: 0.75em;
     align-items: center;
-    gap: .75em;
+    text-align: left;
 }
 
-.user>.avatar {
+.user .avatar {
     width: 50px;
     height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5em;
-    border: solid 1px rgb(41, 40, 40);
+    border-radius: 50%;
+    border: 1px solid #292828;
 }
 
-.user>.username {
+.user .username {
     display: grid;
 }
 
-.username>.displayName {
+.username .displayName {
     font-weight: bold;
 }
 
-.username>.name {
-    color: rgb(87, 87, 87);
+.username .name {
     font-size: 14px;
+    color: var(--text-muted);
 }
 
-.results>.data {
+.data {
     margin-top: 1em;
     display: flex;
-    gap: 5px;
     flex-direction: column;
+    gap: 5px;
 }
 
 .dataGroup {
     display: flex;
-    gap: 5px
+    gap: 5px;
 }
 
 .dataValue {
-    background: #111111;
-    width: 100px;
-    height: auto;
+    background: var(--bg-panel);
+    padding: 0.5em;
+    border-radius: 3px;
     display: flex;
     flex-direction: column;
     text-align: left;
-    padding: .5em;
-    border-radius: 3px;
 }
 
 .dataValue.w50 {
@@ -116,87 +200,13 @@ header>.small {
     width: 100%;
 }
 
-.dataValue>.name {
-    color: rgb(87, 87, 87);
+.dataValue .name {
     font-size: 14px;
+    color: var(--text-muted);
 }
 
-.dataValue>.value {
+.dataValue .value {
     font-weight: bold;
-}
-
-.back {
-    position: fixed;
-    text-align: center;
-    width: 100px;
-}
-
-.grid {
-    display: grid;
-}
-
-input {
-    color: #e4e4e4;
-    background-color: #232323;
-    border: none;
-    outline: none;
-    border-radius: 3px;
-    font-family: "Segoe UI", sans-serif;
-    padding: 10px;
-}
-
-button {
-    position: relative;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    min-width: max-content;
-    border-radius: 3px;
-    gap: 5px;
-    padding: 10px;
-    white-space: nowrap;
-    user-select: none;
-    font-family: "Segoe UI", sans-serif;
-    font-weight: 600;
-    color: #e4e4e4;
-    background-color: #232323;
-    border: transparent;
-    outline: none;
-    cursor: pointer;
-    transform-origin: center;
-    transition:
-        background-color 0.15s,
-        transform 0.15s,
-        border 0.25s,
-        color .15s,
-        border-radius .15s;
-}
-
-button:hover:not(.disabled) {
-    background-color: #282828;
-}
-
-button:active:not(.disabled) {
-    transform: scale(0.97);
-    border-bottom: solid 1px transparent;
-}
-
-button>.loader {
-    position: absolute;
-    left: calc(50% - 2.5em);
-    scale: 30%;
-    display: none;
-}
-
-button.disabled>.loader {
-    display: block;
-}
-
-button.disabled {
-    color: #393939;
-    filter: blur(0.5px);
-    color: transparent;
 }
 
 .ripple-effect {
@@ -210,7 +220,7 @@ button.disabled {
 
 .ripple-effect .ripple {
     position: absolute;
-    background: var(--rippleColor);
+    background: var(--ripple-color);
     border-radius: 50%;
     transform: scale(0);
     transition: transform var(--ripple-speed) ease-out, opacity 0.5s ease-out;
@@ -219,22 +229,18 @@ button.disabled {
     --ripple-speed: 1.75s
 }
 
-.search {
-    width: 100%;
-}
-
 .loader {
     width: 50px;
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 8px solid #161616;
+    border: 8px solid var(--bg-main);
     border-right-color: #808080;
-    animation: loaderSpinner 1s infinite linear;
+    animation: loaderSpinner 1s linear infinite;
 }
 
 @keyframes loaderSpinner {
     to {
-        transform: rotate(1turn)
+        transform: rotate(1turn);
     }
 }
 
