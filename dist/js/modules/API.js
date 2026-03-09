@@ -14,8 +14,12 @@ const DOM = {
     avatar: (0, jquery_1.default)("#avatar"),
     finishCount: (0, jquery_1.default)("#finishCount"),
     banCount: (0, jquery_1.default)("#banCount"),
-    freeSkips: (0, jquery_1.default)("#freeSkips"),
-    checkpoint: (0, jquery_1.default)("#currentCheckpoint"),
+    deathCount: (0, jquery_1.default)("#deathCount"),
+    jailCount: (0, jquery_1.default)("#jailCount"),
+    coins: (0, jquery_1.default)("#coins"),
+    currentCheckpoint: (0, jquery_1.default)("#currentCheckpoint"),
+    currentDifficulty: (0, jquery_1.default)("#currentDifficulty"),
+    isPunished: (0, jquery_1.default)("#isPunished"),
     accessPassword: (0, jquery_1.default)("#accessPassword"),
     login: (0, jquery_1.default)(".login"),
     logout: (0, jquery_1.default)(".logout"),
@@ -106,10 +110,13 @@ const API = {
         DOM.username.text(`@${user.username}`);
         DOM.displayName.text(user.displayName);
         DOM.avatar.attr("src", user.avatar);
-        DOM.finishCount.text(data.ObbyData.FinishCount);
-        DOM.banCount.text(data.ObbyData.BanCount);
-        DOM.freeSkips.text(data.ObbyData.FreeSkips);
-        DOM.checkpoint.text(data.ObbyData.CheckpointId);
+        DOM.finishCount.text(data.Data.Statistics.Wins);
+        DOM.banCount.text(data.Data.Statistics.Bans);
+        DOM.deathCount.text(data.Data.Statistics.Deaths);
+        DOM.jailCount.text(data.Data.Statistics.Jails);
+        DOM.currentCheckpoint.text(data.Data.CurrentCheckpoint);
+        DOM.currentDifficulty.text(data.Data.Meta.Difficulty);
+        DOM.isPunished.text(data.Data.Meta.CurrentPunishment.Active ? "Yes" : "No");
     }
 };
 exports.default = API;
